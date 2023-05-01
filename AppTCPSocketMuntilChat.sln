@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppTCPSocketMuntilChat", "AppTCPSocketMuntilChat\AppTCPSocketMuntilChat.csproj", "{5E459168-8A97-426A-8486-F1C1059BF603}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuntilChatServer", "AppTCPSocketMuntilChat\MuntilChatServer.csproj", "{5E459168-8A97-426A-8486-F1C1059BF603}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MuntiChatClient", "MuntiChatClient\MuntiChatClient.csproj", "{853E3B8A-4722-46F6-8F70-80FBCA0AD348}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5E459168-8A97-426A-8486-F1C1059BF603}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E459168-8A97-426A-8486-F1C1059BF603}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E459168-8A97-426A-8486-F1C1059BF603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{853E3B8A-4722-46F6-8F70-80FBCA0AD348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{853E3B8A-4722-46F6-8F70-80FBCA0AD348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{853E3B8A-4722-46F6-8F70-80FBCA0AD348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{853E3B8A-4722-46F6-8F70-80FBCA0AD348}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

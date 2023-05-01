@@ -1,0 +1,11 @@
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\bin\Debug\AppTCPSocketMuntilChat.exe.config
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\bin\Debug\AppTCPSocketMuntilChat.exe
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\bin\Debug\AppTCPSocketMuntilChat.pdb
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\obj\Debug\MuntilChatServer.csproj.AssemblyReference.cache
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\obj\Debug\MuntilChatServer.csproj.SuggestedBindingRedirects.cache
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\obj\Debug\AppTCPSocketMuntilChat.server.resources
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\obj\Debug\AppTCPSocketMuntilChat.Properties.Resources.resources
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\obj\Debug\MuntilChatServer.csproj.GenerateResource.cache
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\obj\Debug\MuntilChatServer.csproj.CoreCompileInputs.cache
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\obj\Debug\AppTCPSocketMuntilChat.exe
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\AppTCPSocketMuntilChat\obj\Debug\AppTCPSocketMuntilChat.pdb
