@@ -1,11 +1,13 @@
 E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\bin\Debug\MuntiChatClient.exe.config
 E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\bin\Debug\MuntiChatClient.exe
-E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\bin\Debug\MuntiChatClient.pdb
 E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\obj\Debug\MuntiChatClient.csproj.AssemblyReference.cache
 E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\obj\Debug\MuntiChatClient.csproj.SuggestedBindingRedirects.cache
 E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\obj\Debug\MuntiChatClient.Client.resources
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\obj\Debug\MuntiChatClient.DangNhap.resources
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\obj\Debug\MuntiChatClient.DangKy.resources
 E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\obj\Debug\MuntiChatClient.Properties.Resources.resources
 E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\obj\Debug\MuntiChatClient.csproj.GenerateResource.cache
 E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\obj\Debug\MuntiChatClient.csproj.CoreCompileInputs.cache
 E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\obj\Debug\MuntiChatClient.exe
 E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\obj\Debug\MuntiChatClient.pdb
+E:\LẬP TRÌNH MẠNG\Bài tập lớn\AppTCPSocketMuntilChat\MuntiChatClient\bin\Debug\MuntiChatClient.pdb

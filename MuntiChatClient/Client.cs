@@ -127,5 +127,28 @@ namespace MuntiChatClient
         {
             close();
         }
+
+        private void mnuDangKy_Click(object sender, EventArgs e)
+        {
+            DangKy dangKy = new DangKy();
+            dangKy.Show();
+            Hide();
+        }
+
+        private void mnuDangNhap_Click(object sender, EventArgs e)
+        {
+            DangNhap dangNhap = new DangNhap();
+            dangNhap.Show();
+            Hide();
+        }
+
+        private void mnuThoat_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn thoát ứng dụng không ?", "exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+        }
     }
 }
