@@ -148,7 +148,5 @@ namespace MuntiChatClient
                 Application.Exit();
             }
         }
-
-       
     }
 }
