@@ -22,9 +22,6 @@ namespace MuntiChatClient
 
         }
 
-
-
-
         // menu
         private void mnuDangKy_Click(object sender, EventArgs e)
         {
