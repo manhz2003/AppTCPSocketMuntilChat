@@ -168,6 +168,7 @@
             this.lsvMesseger.Size = new System.Drawing.Size(397, 448);
             this.lsvMesseger.TabIndex = 0;
             this.lsvMesseger.UseCompatibleStateImageBehavior = false;
+            this.lsvMesseger.View = System.Windows.Forms.View.List;
             // 
             // server
             // 
