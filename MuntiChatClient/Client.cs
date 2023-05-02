@@ -20,20 +20,19 @@ namespace MuntiChatClient
         public Client()
         {
             InitializeComponent();
-            CheckForIllegalCrossThreadCalls = false;
-            connect();
+            CheckForIllegalCrossThreadCalls = false;          
         }
-
-        private void Client_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
-        }
-
+        
         // gửi tin đi
         private void btnSend_Click(object sender, EventArgs e)
         {
             send();
             addMessage(txtMessager.Text);
+        }
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            connect();
         }
 
 
@@ -123,10 +122,11 @@ namespace MuntiChatClient
         }
 
         // đóng kết nối khi đóng form
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void Client_FormClosed(object sender, FormClosedEventArgs e)
         {
             close();
         }
+
 
         private void mnuDangKy_Click(object sender, EventArgs e)
         {
@@ -150,5 +150,7 @@ namespace MuntiChatClient
                 Application.Exit();
             }
         }
+
+       
     }
 }

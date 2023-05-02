@@ -17,6 +17,15 @@ namespace MuntiChatClient
             InitializeComponent();
         }
 
+        private void btnDangKy_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
+        // menu
         private void mnuDangKy_Click(object sender, EventArgs e)
         {
             DangKy dangKy = new DangKy();
@@ -46,5 +55,7 @@ namespace MuntiChatClient
                 Application.Exit();
             }
         }
+
+       
     }
 }

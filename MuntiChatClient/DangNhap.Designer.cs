@@ -49,59 +49,62 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btnDangNhap);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Font = new System.Drawing.Font("Baskerville Old Face", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 47);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(473, 219);
+            this.groupBox1.Size = new System.Drawing.Size(473, 193);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Đăng nhập";
             // 
             // txtMatKhau
             // 
-            this.txtMatKhau.Location = new System.Drawing.Point(134, 91);
+            this.txtMatKhau.Location = new System.Drawing.Point(133, 77);
             this.txtMatKhau.Name = "txtMatKhau";
-            this.txtMatKhau.Size = new System.Drawing.Size(313, 24);
+            this.txtMatKhau.Size = new System.Drawing.Size(313, 25);
             this.txtMatKhau.TabIndex = 1;
             // 
             // txtTaiKhoan
             // 
-            this.txtTaiKhoan.Location = new System.Drawing.Point(135, 49);
+            this.txtTaiKhoan.Location = new System.Drawing.Point(134, 35);
             this.txtTaiKhoan.Name = "txtTaiKhoan";
-            this.txtTaiKhoan.Size = new System.Drawing.Size(313, 24);
+            this.txtTaiKhoan.Size = new System.Drawing.Size(313, 25);
             this.txtTaiKhoan.TabIndex = 0;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 94);
+            this.label2.Location = new System.Drawing.Point(25, 80);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 18);
+            this.label2.Size = new System.Drawing.Size(76, 17);
             this.label2.TabIndex = 10;
             this.label2.Text = "Mật khẩu";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 49);
+            this.label1.Location = new System.Drawing.Point(25, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 18);
+            this.label1.Size = new System.Drawing.Size(74, 17);
             this.label1.TabIndex = 9;
             this.label1.Text = "tài khoản";
             // 
             // btnDangNhap
             // 
+            this.btnDangNhap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnDangNhap.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDangNhap.Location = new System.Drawing.Point(173, 154);
+            this.btnDangNhap.ForeColor = System.Drawing.Color.White;
+            this.btnDangNhap.Location = new System.Drawing.Point(173, 126);
             this.btnDangNhap.Name = "btnDangNhap";
-            this.btnDangNhap.Size = new System.Drawing.Size(123, 36);
+            this.btnDangNhap.Size = new System.Drawing.Size(123, 42);
             this.btnDangNhap.TabIndex = 2;
             this.btnDangNhap.Text = "Đăng nhập";
-            this.btnDangNhap.UseVisualStyleBackColor = true;
+            this.btnDangNhap.UseVisualStyleBackColor = false;
             this.btnDangNhap.Click += new System.EventHandler(this.btnDangNhap_Click);
             // 
             // menuStrip1
             // 
+            this.menuStrip1.Font = new System.Drawing.Font("Baskerville Old Face", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuDangNhap,
@@ -142,7 +145,7 @@
             this.AcceptButton = this.btnDangNhap;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(496, 279);
+            this.ClientSize = new System.Drawing.Size(496, 252);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
