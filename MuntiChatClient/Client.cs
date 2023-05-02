@@ -148,10 +148,5 @@ namespace MuntiChatClient
                 Application.Exit();
             }
         }
-
-        private void test()
-        {
-            Console.WriteLine("abc");
-        }
     }
 }
