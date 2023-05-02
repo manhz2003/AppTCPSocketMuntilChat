@@ -55,7 +55,6 @@ namespace MuntiChatClient
                 return;
             }
 
-
             Thread listen = new Thread(receive);
             listen.IsBackground = true;
             listen.Start();
@@ -74,7 +73,6 @@ namespace MuntiChatClient
             {
                 socketClient.Send(Serialize(txtMessager.Text));
             }
-
         }
 
         // nhận tin
