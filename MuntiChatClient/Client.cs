@@ -149,6 +149,9 @@ namespace MuntiChatClient
             }
         }
 
-       
+        private void test()
+        {
+            Console.WriteLine("abc");
+        }
     }
 }
