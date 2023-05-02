@@ -8,5 +8,6 @@ namespace AppTCPSocketMuntilChat
 {
     internal class Class2
     {
+        // sadjsadlksja
     }
 }
