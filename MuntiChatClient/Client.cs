@@ -20,27 +20,13 @@ namespace MuntiChatClient
         public Client()
         {
             InitializeComponent();
-            CheckForIllegalCrossThreadCalls = false;          
         }
-        
-        // gửi tin đi
-        private void btnSend_Click(object sender, EventArgs e)
-        {
-            send();
-            addMessage(txtMessager.Text);
-        }
-
-        private void btnConnect_Click(object sender, EventArgs e)
-        {
-            connect();
-        }
-
 
         IPEndPoint IP;
         Socket socketClient;
 
-        // kết nối
-        void connect()
+        // connect
+        private void btnConnect_Click(object sender, EventArgs e)
         {
             IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2023);
             socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -48,6 +34,7 @@ namespace MuntiChatClient
             try
             {
                 socketClient.Connect(IP);
+                MessageBox.Show("Kết nối thành công !", "Thông báo", MessageBoxButtons.OK);
             }
             catch
             {
@@ -58,21 +45,6 @@ namespace MuntiChatClient
             Thread listen = new Thread(receive);
             listen.IsBackground = true;
             listen.Start();
-        }
-
-        // đóng kết nối
-        void close()
-        {
-            socketClient.Close();
-        }
-
-        // gửi tin
-        void send()
-        {
-            if (txtMessager.Text != string.Empty)
-            {
-                socketClient.Send(Serialize(txtMessager.Text));
-            }
         }
 
         // nhận tin
@@ -90,9 +62,23 @@ namespace MuntiChatClient
             }
             catch
             {
-                close();
+                socketClient.Close();
             }
         }
+
+        // gửi tin
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            if (txtMessager.Text == string.Empty)
+            {
+                MessageBox.Show("Bạn chưa nhập dữ liệu !", "Thông báo", MessageBoxButtons.OK);
+            }
+            else
+            {
+                socketClient.Send(Serialize(txtMessager.Text));
+                addMessage(txtMessager.Text);
+            }            
+        }        
 
         // add message vào khung chat
         void addMessage(string s)
@@ -101,17 +87,16 @@ namespace MuntiChatClient
             txtMessager.Clear();
         }
 
-        // phân mảnh
+        // Chuyển mảng byte thành đối tượng.
         byte[] Serialize(object obj)
         {
             MemoryStream stream = new MemoryStream();
             BinaryFormatter Formatter = new BinaryFormatter();
             Formatter.Serialize(stream, obj);
-
             return stream.ToArray();
         }
 
-        // gom mảnh
+        // Chuyển đối tượng thành mảng byte.
         object Deserialize(byte[] data)
         {
             MemoryStream stream = new MemoryStream(data);
@@ -119,13 +104,13 @@ namespace MuntiChatClient
             return Formatter.Deserialize(stream);
         }
 
-        // đóng kết nối khi đóng form
+        // đóng kết nối client khi đóng form.
         private void Client_FormClosed(object sender, FormClosedEventArgs e)
         {
-            close();
+            socketClient.Close();
         }
 
-
+        // menu
         private void mnuDangKy_Click(object sender, EventArgs e)
         {
             DangKy dangKy = new DangKy();
@@ -148,6 +133,6 @@ namespace MuntiChatClient
                 Application.Exit();
             }
         }
-        // abc
+
     }
 }

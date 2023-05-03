@@ -24,19 +24,6 @@ namespace AppTCPSocketMuntilChat
             connect();
         }
 
-        // gửi tin cho tất cả client
-        private void btnSend_Click_1(object sender, EventArgs e)
-        {
-            foreach (Socket item in clientList)
-            {
-                send(item);
-
-            }
-            addMessage(txtMessager.Text);
-            txtMessager.Clear();
-        }
-
-
         IPEndPoint IP;
         Socket socketServer;
         List<Socket> clientList;
@@ -47,8 +34,8 @@ namespace AppTCPSocketMuntilChat
             clientList = new List<Socket>();
             IP = new IPEndPoint(IPAddress.Any, 2023);
             socketServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-
             socketServer.Bind(IP);
+
             Thread listen = new Thread(
                 () =>
                 {
@@ -59,9 +46,7 @@ namespace AppTCPSocketMuntilChat
                             socketServer.Listen(100);
                             Socket client = socketServer.Accept();
                             clientList.Add(client);
-
                             Thread receive = new Thread(Receive);
-                            receive.IsBackground = true;
                             receive.Start(client);
                         }
                     }
@@ -71,24 +56,37 @@ namespace AppTCPSocketMuntilChat
                         socketServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     }
                 });
-            listen.IsBackground = true;
             listen.Start();
-        }
-
-        // đóng kết nối
-        void close()
-        {
-            socketServer.Close();
         }
 
         // gửi tin
         void send(Socket client)
         {
+
             if ( client != null && txtMessager.Text != string.Empty)
             {
-                client.Send(Serialize(txtMessager.Text));
-            }
+                string ServerChat = "Server chat: " + txtMessager.Text;
+                client.Send(Serialize(ServerChat));
+            }           
+        }
 
+        // gửi tin cho tất cả client
+        private void btnSend_Click_1(object sender, EventArgs e)
+        {
+            if (txtMessager.Text == string.Empty)
+            {
+                MessageBox.Show("Bạn chưa nhập dữ liệu !", "Thông báo", MessageBoxButtons.OK);
+            }
+            else
+            {
+                foreach (Socket item in clientList)
+                {
+                    send(item);
+                }
+                string ServerChat = "Server chat: " + txtMessager.Text;
+                addMessage(ServerChat);
+                txtMessager.Clear();
+            }
         }
 
         // nhận tin
@@ -109,7 +107,6 @@ namespace AppTCPSocketMuntilChat
                         if(item != null && item != client)
                         item.Send(Serialize(message));
                     }
-
                 }
             }
             catch
@@ -121,34 +118,31 @@ namespace AppTCPSocketMuntilChat
 
         // add message vào khung chat
         void addMessage(string s)
-        {
+        {            
             lsvMesseger.Items.Add(new ListViewItem() { Text = s });
         }
 
-        // phân mảnh
+        // chuyển object sang byte
         byte[] Serialize(object obj)
         {
             MemoryStream stream = new MemoryStream();
             BinaryFormatter Formatter = new BinaryFormatter();
             Formatter.Serialize(stream, obj);
-
             return stream.ToArray();
         }
 
-        // gom mảnh
+        // Chuyển byte sang object
         object Deserialize(byte[] data)
         {
             MemoryStream stream = new MemoryStream(data);
             BinaryFormatter Formatter = new BinaryFormatter();
             return Formatter.Deserialize(stream);
-
-
         }
 
-        // đóng kết nối
+        // đóng kết server nối, khi đóng form.
         private void server_FormClosed(object sender, FormClosedEventArgs e)
         {
-            close();
+            socketServer.Close();
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
