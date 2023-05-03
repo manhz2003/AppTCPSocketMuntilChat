@@ -24,27 +24,35 @@ namespace MuntiChatClient
 
         IPEndPoint IP;
         Socket socketClient;
-
+        bool isConnected = false;
         // connect
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2023);
-            socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            try
+            if (!isConnected)
             {
-                socketClient.Connect(IP);
-                MessageBox.Show("Kết nối thành công !", "Thông báo", MessageBoxButtons.OK);
-            }
-            catch
-            {
-                MessageBox.Show("Không thể kết nối tới server !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2023);
+                socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            Thread listen = new Thread(receive);
-            listen.IsBackground = true;
-            listen.Start();
+                try
+                {
+                    socketClient.Connect(IP);
+                    MessageBox.Show("Kết nối thành công !", "Thông báo", MessageBoxButtons.OK);
+                    isConnected = true;
+                }
+                catch
+                {
+                    MessageBox.Show("Không thể kết nối tới server !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                Thread listen = new Thread(receive);
+                listen.IsBackground = true;
+                listen.Start();
+            }
+            else
+            {
+                MessageBox.Show("Bạn đã kết nối từ trước rồi !", "Thông báo", MessageBoxButtons.OK);
+            }
         }
 
         // nhận tin
