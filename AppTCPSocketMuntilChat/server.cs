@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace AppTCPSocketMuntilChat
 {
@@ -39,13 +40,21 @@ namespace AppTCPSocketMuntilChat
             Thread listen = new Thread(
                 () =>
                 {
-                   try
+                    try
                     {
                         while (true)
                         {
                             socketServer.Listen(100);
                             Socket client = socketServer.Accept();
                             clientList.Add(client);
+
+                            // Lấy địa chỉ IP của client
+                            string clientIP = client.RemoteEndPoint.ToString();
+
+                            // Thêm item mới vào lsvIP
+                            ListViewItem item = new ListViewItem() { Name = clientIP, Text = clientIP };
+                            lsvIP.Invoke((MethodInvoker)(() => lsvIP.Items.Add(item)));
+
                             Thread receive = new Thread(Receive);
                             receive.Start(client);
                         }
@@ -58,16 +67,15 @@ namespace AppTCPSocketMuntilChat
                 });
             listen.Start();
         }
-
         // gửi tin
         void send(Socket client)
         {
 
-            if ( client != null && txtMessager.Text != string.Empty)
+            if (client != null && txtMessager.Text != string.Empty)
             {
-                string ServerChat = "Server chat: " + txtMessager.Text;
+                string ServerChat = "Server: " + txtMessager.Text;
                 client.Send(Serialize(ServerChat));
-            }           
+            }
         }
 
         // gửi tin cho tất cả client
@@ -83,12 +91,13 @@ namespace AppTCPSocketMuntilChat
                 {
                     send(item);
                 }
-                string ServerChat = "Server chat: " + txtMessager.Text;
+                string ServerChat = "Server: " + txtMessager.Text;
                 addMessage(ServerChat);
                 txtMessager.Clear();
             }
         }
 
+        // nhận tin
         // nhận tin
         void Receive(object obj)
         {
@@ -102,16 +111,36 @@ namespace AppTCPSocketMuntilChat
                     string message = (string)Deserialize(data);
                     addMessage(message);
 
-                    foreach(Socket item in clientList)
+                    // Hiển thị IP của client lên ListView
+                    string clientIP = client.RemoteEndPoint.ToString();
+                    if (!lsvIP.Items.ContainsKey(clientIP))
                     {
-                        if(item != null && item != client)
-                        item.Send(Serialize(message));
+                        // Thêm item mới vào lsvIP
+                        lsvIP.Items.Add(new ListViewItem() { Name = clientIP, Text = clientIP });
+                    }
+
+                    foreach (Socket item in clientList)
+                    {
+                        if (item != null && item != client)
+                            item.Send(Serialize(message));
                     }
                 }
             }
             catch
             {
                 clientList.Remove(client);
+
+                // Xóa địa chỉ IP của client khỏi lsvIP của server
+                for (int i = 0; i < lsvIP.Items.Count; i++)
+                {
+                    if (lsvIP.Items[i].Text == client.RemoteEndPoint.ToString())
+                    {
+                        lsvIP.Items.RemoveAt(i);
+                        break;
+                    }
+                }
+
+                client.BeginDisconnect(false, null, null);
                 client.Close();
             }
         }
@@ -137,7 +166,7 @@ namespace AppTCPSocketMuntilChat
             MemoryStream stream = new MemoryStream(data);
             BinaryFormatter Formatter = new BinaryFormatter();
             return Formatter.Deserialize(stream);
-        }
+        }       
 
         // đóng kết server nối, khi đóng form.
         private void server_FormClosed(object sender, FormClosedEventArgs e)
@@ -153,5 +182,8 @@ namespace AppTCPSocketMuntilChat
                 Application.Exit();
             }
         }
+
+       
+        
     }
 }

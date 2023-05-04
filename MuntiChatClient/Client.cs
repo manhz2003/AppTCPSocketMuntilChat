@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace MuntiChatClient
 {
@@ -25,6 +26,7 @@ namespace MuntiChatClient
         IPEndPoint IP;
         Socket socketClient;
         bool isConnected = false;
+
         // connect
         private void btnConnect_Click(object sender, EventArgs e)
         {
@@ -73,20 +75,33 @@ namespace MuntiChatClient
                 socketClient.Close();
             }
         }
-
+        private string userName;
         // gửi tin
-        private void btnSend_Click(object sender, EventArgs e)
+        private void btnSend_Click_1(object sender, EventArgs e)
         {
-            if (txtMessager.Text == string.Empty)
+            if (!isConnected)
+            {
+                MessageBox.Show("Bạn chưa kết nối tới server !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(userName))
+            {
+                MessageBox.Show("Bạn chưa nhập tên !", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(txtMessager.Text))
             {
                 MessageBox.Show("Bạn chưa nhập dữ liệu !", "Thông báo", MessageBoxButtons.OK);
             }
             else
             {
-                socketClient.Send(Serialize(txtMessager.Text));
-                addMessage(txtMessager.Text);
-            }            
-        }        
+                string message = string.Format("{0}: {1}", userName, txtMessager.Text);
+                socketClient.Send(Serialize(message));
+                addMessage(message);
+            }
+        }
 
         // add message vào khung chat
         void addMessage(string s)
@@ -118,22 +133,7 @@ namespace MuntiChatClient
             socketClient.Close();
         }
 
-        // menu
-        private void mnuDangKy_Click(object sender, EventArgs e)
-        {
-            DangKy dangKy = new DangKy();
-            dangKy.Show();
-            Hide();
-        }
-
-        private void mnuDangNhap_Click(object sender, EventArgs e)
-        {
-            DangNhap dangNhap = new DangNhap();
-            dangNhap.Show();
-            Hide();
-        }
-
-        private void mnuThoat_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn thoát ứng dụng không ?", "exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
@@ -141,6 +141,19 @@ namespace MuntiChatClient
                 Application.Exit();
             }
         }
-
+        
+        private void btnName_Click(object sender, EventArgs e)
+        {
+            if (txtName.Text != "")
+            {
+                userName = txtName.Text;
+                txtName.Clear();
+                MessageBox.Show("Tên đã được lưu: " + userName);
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng nhập tên của bạn");
+            }
+        }
     }
 }
