@@ -21,22 +21,21 @@ namespace AppTCPSocketMuntilChat
         public server()
         {
             InitializeComponent();
-            CheckForIllegalCrossThreadCalls = false;
             connect();
         }
 
         IPEndPoint IP;
         Socket socketServer;
-        List<Socket> clientList;
+        List<Socket> clientList = new List<Socket>();
 
         // kết nối
         void connect()
         {
-            clientList = new List<Socket>();
-            IP = new IPEndPoint(IPAddress.Any, 2023);
-            socketServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            IP = new IPEndPoint(IPAddress.Any, 2222);
+            socketServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socketServer.Bind(IP);
 
+            // luồng lắng nghe các kết nối
             Thread listen = new Thread(
                 () =>
                 {
@@ -55,18 +54,22 @@ namespace AppTCPSocketMuntilChat
                             ListViewItem item = new ListViewItem() { Name = clientIP, Text = clientIP };
                             lsvIP.Invoke((MethodInvoker)(() => lsvIP.Items.Add(item)));
 
+                            // luồng nhận tin
                             Thread receive = new Thread(Receive);
                             receive.Start(client);
                         }
                     }
                     catch
                     {
-                        IP = new IPEndPoint(IPAddress.Any, 2023);
+                        // xử lý ngoại lệ này để đảm bảo khi các xử trên bị lỗi
+                        // ip và socket sẽ được cấp phát lại tránh việc bị dừng chương trình
+                        IP = new IPEndPoint(IPAddress.Any, 2222);
                         socketServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     }
                 });
             listen.Start();
         }
+
         // gửi tin
         void send(Socket client)
         {
@@ -78,12 +81,12 @@ namespace AppTCPSocketMuntilChat
             }
         }
 
-        // gửi tin cho tất cả client
+        // gửi tin cho client
         private void btnSend_Click_1(object sender, EventArgs e)
         {
             if (txtMessager.Text == string.Empty)
             {
-                MessageBox.Show("Bạn chưa nhập dữ liệu !", "Thông báo", MessageBoxButtons.OK);
+                MessageBox.Show("Bạn chưa nhập tin nhắn !", "Thông báo", MessageBoxButtons.OK);
             }
             else
             {
@@ -98,27 +101,23 @@ namespace AppTCPSocketMuntilChat
         }
 
         // nhận tin
-        // nhận tin
+        // truyền tham số là object giúp cho Receive linh hoạt hơn
+        // có thể sử dụng Receive với các đối tượng khác FileStream, NetworkStream...       
         void Receive(object obj)
         {
+            // chuyển đổi đối tượng từ object thành socket và gán vào biến client
             Socket client = obj as Socket;
+
             try
             {
                 while (true)
-                {
+                {                   
                     byte[] data = new byte[1024 * 5000];
                     client.Receive(data);
                     string message = (string)Deserialize(data);
-                    addMessage(message);
+                    addMessage(message);                   
 
-                    // Hiển thị IP của client lên ListView
-                    string clientIP = client.RemoteEndPoint.ToString();
-                    if (!lsvIP.Items.ContainsKey(clientIP))
-                    {
-                        // Thêm item mới vào lsvIP
-                        lsvIP.Items.Add(new ListViewItem() { Name = clientIP, Text = clientIP });
-                    }
-
+                    // gửi tin nhắn của client đến tất cả các client khác.
                     foreach (Socket item in clientList)
                     {
                         if (item != null && item != client)
@@ -168,7 +167,7 @@ namespace AppTCPSocketMuntilChat
             return Formatter.Deserialize(stream);
         }       
 
-        // đóng kết server nối, khi đóng form.
+        // close server, khi đóng form.
         private void server_FormClosed(object sender, FormClosedEventArgs e)
         {
             socketServer.Close();

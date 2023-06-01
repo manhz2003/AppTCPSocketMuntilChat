@@ -32,7 +32,7 @@ namespace MuntiChatClient
         {
             if (!isConnected)
             {
-                IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2023);
+                IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2222);
                 socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
                 try
@@ -48,12 +48,11 @@ namespace MuntiChatClient
                 }
 
                 Thread listen = new Thread(receive);
-                listen.IsBackground = true;
                 listen.Start();
             }
             else
             {
-                MessageBox.Show("Bạn đã kết nối từ trước rồi !", "Thông báo", MessageBoxButtons.OK);
+                MessageBox.Show("Bạn đã kết nối tới server từ trước  !", "Thông báo", MessageBoxButtons.OK);
             }
         }
 
@@ -75,7 +74,25 @@ namespace MuntiChatClient
                 socketClient.Close();
             }
         }
+
+        // biến global lưu tên.
         private string userName;
+
+        // Hàm lưu giá trị textBox vào biến userName.
+        private void btnName_Click(object sender, EventArgs e)
+        {
+            if (txtName.Text != "")
+            {
+                userName = txtName.Text;
+                txtName.Clear();
+                MessageBox.Show("Tên đã được lưu: " + userName);
+            }
+            else
+            {
+                MessageBox.Show("Bạn chưa nhập tên !");
+            }
+        }
+
         // gửi tin
         private void btnSend_Click_1(object sender, EventArgs e)
         {
@@ -93,7 +110,7 @@ namespace MuntiChatClient
 
             if (string.IsNullOrEmpty(txtMessager.Text))
             {
-                MessageBox.Show("Bạn chưa nhập dữ liệu !", "Thông báo", MessageBoxButtons.OK);
+                MessageBox.Show("Bạn chưa nhập nội dung chat !", "Thông báo", MessageBoxButtons.OK);
             }
             else
             {
@@ -103,14 +120,14 @@ namespace MuntiChatClient
             }
         }
 
-        // add message vào khung chat
+        // add message vào listView
         void addMessage(string s)
         {
             lsvMesseger.Items.Add(new ListViewItem() { Text = s });
             txtMessager.Clear();
         }
 
-        // Chuyển mảng byte thành đối tượng.
+        // Chuyển object thành mảng byte.
         byte[] Serialize(object obj)
         {
             MemoryStream stream = new MemoryStream();
@@ -119,7 +136,7 @@ namespace MuntiChatClient
             return stream.ToArray();
         }
 
-        // Chuyển đối tượng thành mảng byte.
+        // Chuyển mảng byte thành object.
         object Deserialize(byte[] data)
         {
             MemoryStream stream = new MemoryStream(data);
@@ -127,7 +144,7 @@ namespace MuntiChatClient
             return Formatter.Deserialize(stream);
         }
 
-        // đóng kết nối client khi đóng form.
+        // đóng kết nối client khi close form.
         private void Client_FormClosed(object sender, FormClosedEventArgs e)
         {
             socketClient.Close();
@@ -142,18 +159,6 @@ namespace MuntiChatClient
             }
         }
         
-        private void btnName_Click(object sender, EventArgs e)
-        {
-            if (txtName.Text != "")
-            {
-                userName = txtName.Text;
-                txtName.Clear();
-                MessageBox.Show("Tên đã được lưu: " + userName);
-            }
-            else
-            {
-                MessageBox.Show("Vui lòng nhập tên của bạn");
-            }
-        }
+        
     }
 }
