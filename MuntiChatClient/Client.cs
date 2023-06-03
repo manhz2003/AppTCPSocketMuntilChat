@@ -22,19 +22,16 @@ namespace MuntiChatClient
         {
             InitializeComponent();
         }
-
-        IPEndPoint IP;
-        Socket socketClient;
+       
+        IPEndPoint IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2222);
+        Socket socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         bool isConnected = false;
 
         // connect
         private void btnConnect_Click(object sender, EventArgs e)
         {
             if (!isConnected)
-            {
-                IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2222);
-                socketClient = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
+            {                
                 try
                 {
                     socketClient.Connect(IP);
@@ -136,6 +133,7 @@ namespace MuntiChatClient
             return stream.ToArray();
         }
 
+      
         // Chuyển mảng byte thành object.
         object Deserialize(byte[] data)
         {
@@ -149,7 +147,7 @@ namespace MuntiChatClient
         {
             socketClient.Close();
         }
-
+      
         private void button1_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn thoát ứng dụng không ?", "exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);

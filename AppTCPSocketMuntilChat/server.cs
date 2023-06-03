@@ -24,15 +24,13 @@ namespace AppTCPSocketMuntilChat
             connect();
         }
 
-        IPEndPoint IP;
-        Socket socketServer;
+        IPEndPoint IP = new IPEndPoint(IPAddress.Any, 2222);
+        Socket socketServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         List<Socket> clientList = new List<Socket>();
 
         // kết nối
         void connect()
         {
-            IP = new IPEndPoint(IPAddress.Any, 2222);
-            socketServer = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socketServer.Bind(IP);
 
             // luồng lắng nghe các kết nối
@@ -51,8 +49,15 @@ namespace AppTCPSocketMuntilChat
                             string clientIP = client.RemoteEndPoint.ToString();
 
                             // Thêm item mới vào lsvIP
-                            ListViewItem item = new ListViewItem() { Name = clientIP, Text = clientIP };
-                            lsvIP.Invoke((MethodInvoker)(() => lsvIP.Items.Add(item)));
+                            ListViewItem item = new ListViewItem(clientIP);
+
+                            // listView là control của form vì vậy chỉ được phép ghi từ main
+                            // hàm invoke giúp đưa các thay đổi từ thread về luồng main.
+                            // tham số MethodInvoker là 1 delegate đưa biểu thức không
+                            // có tham số vào luồng main chờ thực thi.
+                            lsvIP.Invoke((MethodInvoker)(
+                                () => lsvIP.Items.Add(item)
+                                ));
 
                             // luồng nhận tin
                             Thread receive = new Thread(Receive);
@@ -101,8 +106,8 @@ namespace AppTCPSocketMuntilChat
         }
 
         // nhận tin
-        // truyền tham số là object giúp cho Receive linh hoạt hơn
-        // có thể sử dụng Receive với các đối tượng khác FileStream, NetworkStream...       
+        // socket chứa client được nhận từ client được truyền vào hàm start của thread
+        // sau đó chuyển sang cho hàm receive nhận vào 1 obj, ta chuyển obj thành socket.
         void Receive(object obj)
         {
             // chuyển đổi đối tượng từ object thành socket và gán vào biến client
@@ -120,6 +125,7 @@ namespace AppTCPSocketMuntilChat
                     // gửi tin nhắn của client đến tất cả các client khác.
                     foreach (Socket item in clientList)
                     {
+                        // kiểm tra khác null và tránh gửi lặp lại tin nhắn client.
                         if (item != null && item != client)
                             item.Send(Serialize(message));
                     }
@@ -127,19 +133,20 @@ namespace AppTCPSocketMuntilChat
             }
             catch
             {
+                // xóa socket client khỏi clientList.
                 clientList.Remove(client);
 
-                // Xóa địa chỉ IP của client khỏi lsvIP của server
+                // tìm và xóa địa chỉ IP của client khỏi lsvIP
                 for (int i = 0; i < lsvIP.Items.Count; i++)
                 {
+                    // so sánh địa chỉ của mỗi client có khớp với địa chỉ vừa thoát ra k
                     if (lsvIP.Items[i].Text == client.RemoteEndPoint.ToString())
                     {
-                        lsvIP.Items.RemoveAt(i);
+                        // xóa vị trí được chỉ định
+                        lsvIP.Items.RemoveAt(i); 
                         break;
                     }
-                }
-
-                client.BeginDisconnect(false, null, null);
+                }               
                 client.Close();
             }
         }
